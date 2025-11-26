@@ -16,7 +16,21 @@ private int indexQuestionCourante = 0;
 private int score = 0;
 
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(interface_Elias.class.getName());
-    int compteur=0;
+    private void traiterReponseChoisie(int choix) {
+    Question q = listeQuestions.get(indexQuestionCourante);
+    if (choix == q.getIndexBonneReponse()) {
+        lblFeedback.setText("Bonne réponse");
+        score++;
+    } else {
+        lblFeedback.setText("Mauvaise réponse");
+    }
+    // désactiver toutes les réponses pour empêcher un second clic
+    listeQuestions(false);
+
+    // (optionnel) mettre à jour un label de score si tu en as un
+    // lblScore.setText("Score : " + score);
+}
+
 
     /**
      * Creates new form interface_Elias
@@ -37,7 +51,14 @@ private int score = 0;
     private void afficherQuestionCourante() {
         Question q = listeQuestions.get(indexQuestionCourante);
 lblQuestion.setText(q.getIntitule());
-    }
+   btnRep1.setText(q.getProposition1());
+    btnRep2.setText(q.getProposition2());
+    btnRep3.setText(q.getProposition3());
+    btnRep4.setText(q.getProposition1());
+    btnRep1.setEnabled(true);
+    btnRep2.setEnabled(true);
+    btnRep3.setEnabled(true);
+    btnRep4.setEnabled(true);}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,7 +82,7 @@ lblQuestion.setText(q.getIntitule());
 
         lblQuestion.setFont(new java.awt.Font("Segoe UI", 2, 18)); // NOI18N
         lblQuestion.setText("lblQuestion");
-        getContentPane().add(lblQuestion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 105, -1));
+        getContentPane().add(lblQuestion, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 30, 270, -1));
 
         btnRep1.setText("Réponse 1");
         btnRep1.addActionListener(new java.awt.event.ActionListener() {
@@ -86,21 +107,39 @@ lblQuestion.setText(q.getIntitule());
         getContentPane().add(btnRep2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 80, 90, 30));
 
         btnRep3.setText("Réponse 3");
+        btnRep3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRep3ActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRep3, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 90, 30));
 
         btnRep4.setText("Réponse 4");
+        btnRep4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRep4ActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRep4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 90, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRep1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRep1ActionPerformed
-        // TODO add your handling code here:
+        traiterReponseChoisie(1);// TODO add your handling code here:
     }//GEN-LAST:event_btnRep1ActionPerformed
 
     private void btnRep2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRep2ActionPerformed
-        // TODO add your handling code here:
+       traiterReponseChoisie(2); // TODO add your handling code here:
     }//GEN-LAST:event_btnRep2ActionPerformed
+
+    private void btnRep3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRep3ActionPerformed
+       traiterReponseChoisie(3);// TODO add your handling code here:
+    }//GEN-LAST:event_btnRep3ActionPerformed
+
+    private void btnRep4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRep4ActionPerformed
+        traiterReponseChoisie(4);// TODO add your handling code here:
+    }//GEN-LAST:event_btnRep4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,4 +176,8 @@ lblQuestion.setText(q.getIntitule());
     private javax.swing.JLabel lblFeedback;
     private javax.swing.JLabel lblQuestion;
     // End of variables declaration//GEN-END:variables
+
+    private void listeQuestions(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 }
