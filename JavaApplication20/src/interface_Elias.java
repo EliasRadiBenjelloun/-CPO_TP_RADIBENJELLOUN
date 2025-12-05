@@ -24,12 +24,13 @@ private int score = 0;
     } else {
         lblFeedback.setText("Mauvaise réponse");
     }
-    // désactiver toutes les réponses pour empêcher un second clic
+   
     listeQuestions(false);
+    
 
-    // (optionnel) mettre à jour un label de score si tu en as un
-    // lblScore.setText("Score : " + score);
+   
 }
+
 
 
     /**
@@ -37,7 +38,7 @@ private int score = 0;
      */
     public interface_Elias() {
         initComponents();//constructeur
-       // FenetreQuiz.java (extrait du constructeur)
+       
 
     listeQuestions = new ArrayList<>();
 
@@ -96,6 +97,11 @@ lblQuestion.setText(q.getIntitule());
         getContentPane().add(lblFeedback, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, -1, -1));
 
         btnSuivant.setText("Question suivante");
+        btnSuivant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuivantActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnSuivant, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
 
         btnRep2.setText("Réponse 2");
@@ -141,6 +147,19 @@ lblQuestion.setText(q.getIntitule());
         traiterReponseChoisie(4);// TODO add your handling code here:
     }//GEN-LAST:event_btnRep4ActionPerformed
 
+    private void btnSuivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuivantActionPerformed
+       Question q = listeQuestions.get(indexQuestionCourante);
+
+    lblQuestion.setText(q.getIntitule());
+    btnRep1.setText(q.getProposition1());
+    btnRep2.setText(q.getProposition2());
+    btnRep3.setText(q.getProposition3());
+    btnRep4.setText(q.getProposition4());
+
+    lblFeedback.setText(""); 
+    activerReponses(true);   
+    }//GEN-LAST:event_btnSuivantActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -178,6 +197,10 @@ lblQuestion.setText(q.getIntitule());
     // End of variables declaration//GEN-END:variables
 
     private void listeQuestions(boolean b) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private void activerReponses(boolean b) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
