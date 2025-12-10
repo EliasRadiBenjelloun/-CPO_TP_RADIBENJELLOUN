@@ -7,18 +7,63 @@
  *
  * @author eradi
  */
+import javax.swing.*;
+import java.awt.*;
+import miniprojet_cadenas_radibenjelloun.ResultatEssai;
 public class Interface_jeu extends javax.swing.JFrame {
+    private JTextField txt_essai;
+    private JButton btn_valider;
+    private JTextArea zone_resultats;
+    private JLabel lbl_essaisRestants;
+
+    private CadenasGame game;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Interface_jeu.class.getName());
 
     /**
-     * Creates new form Interface_jeu
+     * @param game
      */
-    public Interface_jeu() {
-        Cadenas jeu = new Cadenas(10);
-        int[] proposition = lireChiffresDepuisInterface();
-Resultat r = jeu.verifier(proposition);
-afficherResultat(r);
+    public Interface_jeu(CadenasGame game) {
+        this.game = game;
+         setTitle("Jeu Cadenas - Mastermind");
+        setSize(400, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // --- Haut : zone de saisie ---
+        JPanel panelHaut = new JPanel();
+        txt_essai = new JTextField(5);
+        btn_valider = new JButton("Valider");
+        panelHaut.add(new JLabel("Essai (4 chiffres) :"));
+        panelHaut.add(txt_essai);
+        panelHaut.add(btn_valider);
+
+        // --- Centre : zone des résultats ---
+        zone_resultats = new JTextArea();
+        zone_resultats.setEditable(false);
+        JScrollPane scroll = new JScrollPane(zone_resultats);
+
+        // --- Bas : essais restants ---
+        lbl_essaisRestants = new JLabel("Essais restants : " + game.getEssaisRestants());
+        lbl_essaisRestants.setHorizontalAlignment(SwingConstants.CENTER);
+
+        add(panelHaut, BorderLayout.NORTH);
+        add(scroll, BorderLayout.CENTER);
+        add(lbl_essaisRestants, BorderLayout.SOUTH);
+
+        // Action du bouton
+        btn_valider.addActionListener(e -> traiterEssai());
+
+        setVisible(true);
+        // Dans le constructeur de Interface_jeu
+// ...
+// Action du bouton
+btn_valider.addActionListener(e -> traiterEssai());
+
+// setVisible(true);  <-- RETIRER CETTE LIGNE !
+
+// Si vous utilisez ma version corrigée :
+// }
 
 
     }
@@ -251,26 +296,18 @@ afficherResultat(r);
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new Interface_jeu().setVisible(true));
+        // Le code de lancement NE CONTIENT PAS la déclaration du constructeur !
+        final CadenasGame jeu = new CadenasGame();
+        
+        // ... code Look and Feel ...
+        
+        java.awt.EventQueue.invokeLater(() -> {
+            // Appel du constructeur :
+            new Interface_jeu(jeu).setVisible(true);
+        });
     }
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bouton_recommencer;
@@ -299,10 +336,41 @@ afficherResultat(r);
     // End of variables declaration//GEN-END:variables
 
     private int[] lireChiffresDepuisInterface() {
+         
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     private void afficherResultat(Resultat r) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    private void traiterEssai() {
+        String essai = txt_essai.getText();
+
+        if (essai.length() != 4 || !essai.matches("\\d{4}")) {
+            JOptionPane.showMessageDialog(this, "Veuillez entrer 4 chiffres.");
+            return;
+        
+        
+    }
+        ResultatEssai r = game.verifier(essai);
+        zone_resultats.append(
+                essai + " → Exact: " + r.exact + 
+                ", Trop haut: " + r.tropHaut +
+                ", Trop bas: " + r.tropBas + "\n"
+        );
+
+        lbl_essaisRestants.setText("Essais restants : " + r.essaisRestants);
+
+        if (r.exact == 4) {
+            JOptionPane.showMessageDialog(this, "Bravo ! Vous avez trouvé !");
+            System.exit(0);
+        }
+        if (r.essaisRestants == 0) {
+            JOptionPane.showMessageDialog(this, "Perdu ! Plus d'essais.");
+            System.exit(0);
+        }
+        txt_essai.setText("");
+}
+    
 }
