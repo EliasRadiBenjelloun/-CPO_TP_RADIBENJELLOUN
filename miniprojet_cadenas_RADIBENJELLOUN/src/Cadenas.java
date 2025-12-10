@@ -28,6 +28,7 @@ public Cadenas(int nbTentativesMax) {
         for (int i = 0; i < 4; i++) {
             combinaisonSecrete[i] = r.nextInt(10); // chiffres 0 à 9
         }
+ }
    public Resultat verifier(int[] proposition) {
         tentativeCourante++;
         historique.add(proposition);

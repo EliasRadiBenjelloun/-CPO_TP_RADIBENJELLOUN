@@ -7,14 +7,17 @@
  *
  * @author eradi
  */
-class Resultat {
+public class Resultat {
+private int exact;
+    private int tropHaut;
+    private int tropBas;
 
-    Resultat(int exact, int tropHaut, int tropBas) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Resultat(int exact, int tropHaut, int tropBas) {
+        this.exact = exact;
+        this.tropHaut = tropHaut;
+        this.tropBas = tropBas;
     }
-
-    int getExact() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-    
+        public int getExact() { return exact; }
+    public int getTropHaut() { return tropHaut; }
+    public int getTropBas() { return tropBas; }
 }
