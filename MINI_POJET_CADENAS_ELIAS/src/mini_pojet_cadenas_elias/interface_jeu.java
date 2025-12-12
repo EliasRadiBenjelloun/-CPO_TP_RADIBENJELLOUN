@@ -4,14 +4,21 @@
  */
 package mini_pojet_cadenas_elias;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane; // <--- AJOUTER CET IMPORT
+import javax.swing.JTextArea;
+
 /**
  *
  * @author eradi
  */
 public class interface_jeu extends javax.swing.JFrame {
+    private JeuCadenas jeu = new JeuCadenas();
+
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(interface_jeu.class.getName());
-
+    
     /**
      * Creates new form interface_jeu
      */
@@ -51,6 +58,7 @@ public class interface_jeu extends javax.swing.JFrame {
         texte_score = new javax.swing.JLabel();
         texte_tentatives = new javax.swing.JLabel();
         bouton_recommencer = new javax.swing.JButton();
+        txtHistorique = new javax.swing.JScrollPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -105,6 +113,11 @@ public class interface_jeu extends javax.swing.JFrame {
 
                         bouton_tester.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
                         bouton_tester.setText("Tester");
+                        bouton_tester.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                bouton_testerActionPerformed(evt);
+                            }
+                        });
                         getContentPane().add(bouton_tester, new org.netbeans.lib.awtextra.AbsoluteConstraints(399, 105, -1, -1));
 
                         texte_lbl_nb_chiffres_exacts.setText("Nombre de chiffres exacts :");
@@ -126,14 +139,20 @@ public class interface_jeu extends javax.swing.JFrame {
                         getContentPane().add(texte_nb_chiffres_bas, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 283, 43, -1));
 
                         texte_score.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-                        texte_score.setText("    0 sur 5");
+                        texte_score.setText("    0 sur 4 ");
                         getContentPane().add(texte_score, new org.netbeans.lib.awtextra.AbsoluteConstraints(376, 249, 118, 59));
 
-                        texte_tentatives.setText("Tentatives");
+                        texte_tentatives.setText("Tentatives:");
                         getContentPane().add(texte_tentatives, new org.netbeans.lib.awtextra.AbsoluteConstraints(405, 215, 64, -1));
 
                         bouton_recommencer.setText("Recommencer");
+                        bouton_recommencer.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                bouton_recommencerActionPerformed(evt);
+                            }
+                        });
                         getContentPane().add(bouton_recommencer, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 332, -1, -1));
+                        getContentPane().add(txtHistorique, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 160, 100, 90));
 
                         pack();
                     }// </editor-fold>//GEN-END:initComponents
@@ -141,6 +160,62 @@ public class interface_jeu extends javax.swing.JFrame {
     private void down_chiffre_3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_down_chiffre_3ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_down_chiffre_3ActionPerformed
+
+    private void bouton_testerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_testerActionPerformed
+try {
+     
+        List<Integer> texte_tentatives = new ArrayList<>();
+        texte_tentatives.add(Integer.parseInt(texte_chiffre_0.getText()));
+       texte_tentatives.add(Integer.parseInt(texte_chiffre_1.getText()));
+        texte_tentatives.add(Integer.parseInt(texte_chiffre_2.getText()));
+        texte_tentatives.add(Integer.parseInt(texte_chiffre_3.getText()));
+
+      
+        int[] resultat = jeu.testerCombinaison(texte_tentatives);
+
+        // 3 - Afficher les résultats
+        texte_lbl_nb_chiffres_exacts.setText("Corrects : " + resultat[0]);
+      texte_lbl_nb_chiffres_bas.setText("Trop bas : " + resultat[1]);
+        texte_lbl_nb_chiffres_haut.setText("Trop hauts : " + resultat[2]);
+
+       
+        txtHistorique.append(
+            texte_tentatives.toString() +
+            " → bons: " + resultat[0] +
+            ", bas: " + resultat[1] +
+            ", hauts: " + resultat[2] + "\n"
+        );
+
+     
+        if (jeu.isGagne()) {
+            JOptionPane.showMessageDialog(this, "Bravo ! Vous avez gagné !");
+        }
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Veuillez entrer des chiffres valides !");
+    }      
+    }//GEN-LAST:event_bouton_testerActionPerformed
+
+    private void bouton_recommencerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bouton_recommencerActionPerformed
+ 
+    jeu.reinitialiser();
+
+    
+    texte_chiffre_0.setText("");
+    texte_chiffre_1.setText("");
+   texte_chiffre_2.setText("");
+    texte_chiffre_3.setText("");
+
+    // Réinitialiser les labels
+    texte_lbl_nb_chiffres_exacts.setText("Corrects : 0");
+    texte_lbl_nb_chiffres_bas.setText("Trop bas : 0");
+    texte_lbl_nb_chiffres_haut.setText("Trop hauts : 0");
+
+   
+    txtHistorique.setText("");
+
+    JOptionPane.showMessageDialog(this, "Nouvelle partie !");        // TODO add your handling code here:
+    }//GEN-LAST:event_bouton_recommencerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -187,6 +262,7 @@ public class interface_jeu extends javax.swing.JFrame {
     private javax.swing.JLabel texte_nb_chiffres_haut;
     private javax.swing.JLabel texte_score;
     private javax.swing.JLabel texte_tentatives;
+    private javax.swing.JScrollPane txtHistorique;
     private javax.swing.JButton up_chiffre_1;
     private javax.swing.JButton up_chiffre_2;
     private javax.swing.JButton up_chiffre_3;
