@@ -12,13 +12,13 @@ public class Voiture {
     String modele;
     String marque;
     int puissance;
-    Personne proprietaire; // référence vers une Personne
+    Personne proprietaire; 
 
     public Voiture(String unModele, String uneMarque, int unePuissance) {
         modele = unModele;
         marque = uneMarque;
         puissance = unePuissance;
-        proprietaire = null; // par défaut, la voiture n'a pas de propriétaire
+        proprietaire = null; 
     }
 
     @Override

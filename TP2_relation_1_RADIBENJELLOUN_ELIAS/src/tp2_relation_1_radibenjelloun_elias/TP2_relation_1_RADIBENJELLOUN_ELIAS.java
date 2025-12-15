@@ -23,8 +23,24 @@ public class TP2_relation_1_RADIBENJELLOUN_ELIAS {
         Personne reno = new Personne("Raines", "Reno");
 
         System.out.println("liste des voitures disponibles :\n" 
-            + uneClio + "\n" + uneAutreClio + "\n" + une2008 + "\n" + uneMicra);  
-        // TODO code application logic here
+            + uneClio + "\n" + uneAutreClio + "\n" + une2008 + "\n" + uneMicra);   
+        bob.liste_voitures[0] = uneClio;
+bob.nbVoitures = 1;
+uneClio.proprietaire = bob;
+bob.liste_voitures[1] = uneMicra;
+bob.nbVoitures = 2;
+uneMicra.proprietaire = bob;
+
+reno.liste_voitures[0] = une2008;
+reno.nbVoitures = 1;
+une2008.proprietaire = reno;
+System.out.println("La première voiture de Bob est : " + bob.liste_voitures[0]);
+System.out.println("Propriétaire de la Micra : " + uneMicra.proprietaire);
+bob.ajouter_voiture(uneClio);
+bob.ajouter_voiture(uneMicra);
+reno.ajouter_voiture(une2008);
+
+// TODO code application logic here
     }
     
 }

@@ -12,12 +12,12 @@ public class Personne {
     String nom;
     String prenom;
     int nbVoitures;
-    Voiture[] liste_voitures; // tableau de voitures
+    Voiture[] liste_voitures; 
 
     public Personne(String unNom, String unPrenom) {
         nom = unNom;
         prenom = unPrenom;
-        liste_voitures = new Voiture[3]; // max 3 voitures
+        liste_voitures = new Voiture[3]; 
         nbVoitures = 0;
     }
 
@@ -25,5 +25,22 @@ public class Personne {
     public String toString() {
         return prenom + " " + nom;
     }
+    public boolean ajouter_voiture(Voiture voiture_a_ajouter) {
+
+    if (voiture_a_ajouter.proprietaire != null) {
+        return false; 
+    }
+
+    if (nbVoitures >= 3) {
+        return false; 
+    }
+
+    liste_voitures[nbVoitures] = voiture_a_ajouter;
+    voiture_a_ajouter.proprietaire = this;
+    nbVoitures++;
+
+    return true;
+}
+
     
 }
