@@ -8,10 +8,12 @@ package tp3_heroic_fantasy_radibenjelloun;
  *
  * @author eradi
  */
-
+import Personnages.Guerrier;
+import Personnages.Magicien;
 import Armes.Epee;
 import Armes.Baton;
 import Armes.Arme;
+import Personnages.Personnage;
 import java.util.ArrayList;
 public class TP3_Heroic_Fantasy_RADIBENJELLOUN {
 
@@ -39,6 +41,26 @@ public class TP3_Heroic_Fantasy_RADIBENJELLOUN {
         System.out.println("---- Inventaire des armes ----");
         for (int i = 0; i < inventaire.size(); i++) {
             System.out.println(inventaire.get(i).toString());
+        }
+         Magicien gandalf = new Magicien("Gandalf", 65, true);
+        Magicien garcimore = new Magicien("Garcimore", 44, false);
+
+        // Guerriers
+        Guerrier conan = new Guerrier("Conan", 78, false);
+        Guerrier lannister = new Guerrier("Lannister", 45, true);
+
+        // Tableau dynamique
+        ArrayList<Personnage> persos = new ArrayList<>();
+
+        persos.add(gandalf);
+        persos.add(garcimore);
+        persos.add(conan);
+        persos.add(lannister);
+
+        // Affichage
+        System.out.println("---- Personnages ----");
+        for (Personnage p : persos) {
+            System.out.println(p);
         }
     }
     }
