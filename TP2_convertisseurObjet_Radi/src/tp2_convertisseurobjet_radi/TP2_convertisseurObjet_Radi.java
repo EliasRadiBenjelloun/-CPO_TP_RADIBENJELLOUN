@@ -34,7 +34,7 @@ public class TP2_convertisseurObjet_Radi {
         System.out.println("Convertisseur 1 : " + conv1);
         System.out.println("Convertisseur 2 : " + conv2);
 
-        // TODO code application logic here
+        
     }
     
 }
